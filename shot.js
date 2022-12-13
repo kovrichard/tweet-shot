@@ -7,13 +7,13 @@ var argv = require('minimist')(process.argv.slice(2));
 
 const run = async () => {
   if (argv.t !== undefined) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless:true});
     const page = await browser.newPage();
     console.log('Setting up viewport...');
 
     await page.setViewport({
       width: 800,
-      height: 1200
+      height: 5000
     });
 
     await page.goto(argv.t);
@@ -31,7 +31,7 @@ const run = async () => {
     console.log('Loading tweet #' + split[5] + ' from @' + split[3] + '...');
 
     setTimeout(async function () {
-      let element = await page.$('article');
+      let element = await page.$("article[tabindex='-1'");
       let coordinates = await element.boundingBox();
 
       if (argv.m == 'dark')
@@ -42,6 +42,7 @@ const run = async () => {
         path: filename,
         fullPage: false
       });
+      //await element.screenshot({path:filename,fullPage:false})
 
       await browser.close();
 
