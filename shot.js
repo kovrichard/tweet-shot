@@ -34,6 +34,10 @@ const run = async () => {
       let element = await page.$('article');
       let coordinates = await element.boundingBox();
 
+      if (argv.m == 'dark')
+        await page.emulateMediaFeatures([{
+          name: 'prefers-color-scheme', value: 'dark' }]);
+
       await page.screenshot({
         path: filename,
         fullPage: false
