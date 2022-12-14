@@ -9,6 +9,9 @@ const run = async () => {
   if (argv.t !== undefined) {
     const browser = await puppeteer.launch({headless:true});
     const page = await browser.newPage();
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'en'
+    });
     console.log('Setting up viewport...');
 
     await page.setViewport({
